@@ -10,7 +10,9 @@ app.use(express.json())
 app.use(cors())
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/", rateLimiterUsingThirdParty, namesRoutes.routes)
+app.use("/", rateLimiterUsingThirdParty, namesRoutes.routes);
 
 
-app.listen(PORT, () => console.log("App is listening on " + PORT))
+app.listen(PORT, () => console.log("App is listening on " + PORT));
+
+module.exports = app;

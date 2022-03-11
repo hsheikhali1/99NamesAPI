@@ -1,89 +1,90 @@
-"use strict"
-
-const firebase = require("../db")
-const firestore = firebase.firestore()
-
-
-// const addName = async (req, res, next) => {
-//     try {
-//         namesArr[0]
-//         namesArr.map(async (nameObj, i) => {
-//             await firestore.collection("Names").doc().set(nameObj)
-//         })
-//         res.send("Added to collection :)")
-//     } catch (e) {
-//         res.status(400).res.send(e.message)
-//     }
-// }
+const firebase = require("../db");
+const firestore = firebase.firestore();
 
 const getAllNames = async (req, res, next) => {
-    try {
-        const names = await firestore.collection("Names").orderBy("id")
-        const snapshot = await names.get()
-        const list = snapshot.docs.map((docs) => docs.data())
-        res.send(list)
-    } catch (e) {
-        res.status(400).send("Something went wrong with retrieving all the names")
-    }
-}
+  try {
+    const names = await firestore.collection("Names").orderBy("id");
+    const snapshot = await names.get();
+    const list = snapshot.docs.map((docs) => docs.data());
+    res.send(list);
+  } catch (e) {
+    res.status(400).send("Something went wrong with retrieving all the names");
+  }
+};
 
 const getSpecificName = async (req, res, next) => {
-    try {
-        const id = req.params.id
-        const name = await firestore.collection("Names").where("id", "==", parseInt(id))
-        const snapshot = await name.get()
-        const data = snapshot.docs.map((docs) => docs.data())
-        if (data.length === 0) {
-            res.status(400).send("A name with that id does not seem to exist unfortunately")
-        } else {
-        res.send(data)
-        }
-    }catch (e) {
-        res.status(400).send(e.message)
-
+  try {
+    const id = req.params.id;
+    const name = await firestore
+      .collection("Names")
+      .where("id", "==", parseInt(id));
+    const snapshot = await name.get();
+    const data = snapshot.docs.map((docs) => docs.data());
+    if (data.length === 0) {
+      res
+        .status(400)
+        .send("A name with that id does not seem to exist unfortunately");
+    } else {
+      res.send(data);
     }
-}
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+};
 
 //gets a range of names from the data base
 const getRange = async (req, res, next) => {
-    try{
-        const id = req.params.id
-        const id2 = req.params.id2
-        const name = await firestore.collection("Names").where("id", ">=", parseInt(id)).where("id", "<=", parseInt(id2))
-        const snapshot = await name.get()
-        const data = snapshot.docs.map((docs) => docs.data())
-        if (Number(id) > Number(id2)){
-            res.status(400).send("Start id cannot be larger than end id")
-        }else if (data.length === 0) {
-            res.status(400).send("A name with that id does not seem to exist sadly")
-        } else {
-            res.send(data)
-        }
-    }catch (e) {
-        res.status(400).send(e.message)
+  try {
+    const id = req.params.id;
+    const id2 = req.params.id2;
+    const name = await firestore
+      .collection("Names")
+      .where("id", ">=", parseInt(id))
+      .where("id", "<=", parseInt(id2));
+    const snapshot = await name.get();
+    const data = snapshot.docs.map((docs) => docs.data());
+    if (Number(id) > Number(id2)) {
+      res.status(400).send("Start id cannot be larger than end id");
+    } else if (data.length === 0) {
+      res.status(400).send("A name with that id does not seem to exist sadly");
+    } else {
+      res.send(data);
     }
-}
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+};
 
+/**
+ * Get a random name from the database and
+ * return with the status 200.
+ * @param {Request} req Request parameter
+ * @param {Response} res Response parameter
+ * @param {NextFunction} next NextFunction parameter
+ */
 const getARandomName = async (req, res, next) => {
-    try {
-        const randomID = Math.floor((Math.random()*100));
-        const name = await firestore.collection("Names").where("id", "==", parseInt(randomID))
-        console.log(randomID)
-        const snapshot = await name.get()
-        const data = snapshot.docs.map((docs) => docs.data())
-        if (data.length === 0) {
-            res.status(400).send("A name with that id does not seem to exist unfortunately")
-        } else {
-        res.send(data)
-        }
-    } catch (e) {
-        res.status(400).send(e.message)
-
+  try {
+    const randomID = Math.floor(Math.random() * 100);
+    const name = await firestore
+      .collection("Names")
+      .where("id", "==", parseInt(randomID));
+    const snapshot = await name.get();
+    const data = snapshot.docs.map((docs) => docs.data());
+    if (data.length === 0) {
+      res
+        .status(400)
+        .send("A name with that id does not seem to exist unfortunately");
+    } else {
+      res.send(data);
     }
-}
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+};
+
 module.exports = {
-    getAllNames,
-    getSpecificName,
-    getARandomName,
-    getRange
-}
+  getAllNames,
+  getSpecificName,
+  getARandomName,
+  getRange,
+};

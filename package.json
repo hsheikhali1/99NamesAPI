@@ -15,11 +15,14 @@
   "description": "API to access the 99 names of Allah",
   "main": "index.js",
   "devDependencies": {
-    "@babel/helper-compilation-targets": "^7.16.7"
+    "eslint": "^8.10.0",
+    "jest": "^27.5.1",
+    "supertest": "^6.2.2"
   },
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "test": "NODE_ENV=test jest --forceExit --detectOpenHandles --watchAll --maxWorkers=1"
   },
   "author": "Momito",
   "license": "ISC"
