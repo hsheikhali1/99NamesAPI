@@ -8,7 +8,8 @@
     "firebase": "^8.10.0",
     "firebase-admin": "^10.0.2",
     "firebase-functions": "^3.14.1",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "swagger-ui-express": "^4.3.0"
   },
   "name": "namesapi",
   "version": "1.0.0",
@@ -25,7 +26,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js",
+    "dev": "nodemon --experimental-json-modules index.js",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest --detectOpenHandles --watchAll"
   },
   "author": "Momito",
